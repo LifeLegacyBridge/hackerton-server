@@ -1,5 +1,7 @@
 import express from 'express';
-import { sequelize } from './src/database/index.js';
+import db from './src/database/index.js';
+import { authRouter } from './src/route/auth.route.js';
+import { chatgptRouter } from './src/route/chatgpt.route.js';
 
 const app = express();
 const PORT = 3000;
@@ -8,22 +10,23 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Sequelize 테이블 초기화
-const initDatabase = async () => {
-    try {
-        await sequelize.sync({ force: true });
-        console.log('데이터베이스와 모든 테이블이 성공적으로 동기화되었습니다!');
-    } catch (error) {
-        console.error('데이터베이스 초기화 중 오류 발생:', error);
-    }
-};
 
-initDatabase();
+(async () => {
+    try {
+        await db.sequelize.sync({ alter: true });
+        console.log('Database synchronized successfully!');
+    } catch (err) {
+        console.error('Error synchronizing database:', err);
+    }
+})();
 
 // 간단한 API 예시
 app.get('/', (req, res) => {
     res.send('Sequelize와 Express 서버가 동작 중입니다!');
 });
+
+app.use('/auth',authRouter);
+app.use('/chatgpt',chatgptRouter);
 
 app.listen(PORT, () => {
     console.log(`서버가 http://localhost:${PORT} 에서 실행 중입니다.`);

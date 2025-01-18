@@ -7,6 +7,7 @@ import { authRouter } from './src/route/auth.route.js';
 import { userRouter } from './src/route/user.router.js';
 import { myprofileRouter } from './src/route/myprofile.route.js';
 import { postRouter } from './src/route/post.router.js';
+import { chatgptRouter } from './src/route/chatgpt.route.js';
 
 const app = express();
 const PORT = 3000;

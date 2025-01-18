@@ -82,7 +82,11 @@ export const final = async (uuid) => {
                         photoUrl:response.data.s3_url,
                     },
                     {
-                        where:{uuid},
+                        where:{
+                            uuid,
+                            bigQuestionId: i,
+                            smallQuestionId: j,
+                        },
                     });
                 }catch(err){
                     console.error(err);

@@ -62,24 +62,31 @@ export const final = async (uuid) => {
                     smallQuestionId: j,
                 }
             });
-            if(userAnswer.finalAnswer){
-                const response = await axios.post(
-                    'http://192.168.187.68:5000/generate',
-                    {
-                        prompt: userAnswer.finalAnswer,
+            if(!userAnswer){
+                break;
+            }
+            else{
+                try{
+                    const response = await axios.post(
+                        'http://192.168.187.68:5000/generate',
+                        {
+                            prompt: userAnswer.finalAnswer,
+                        },
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        }
+                    );
+                    await UserAnswer.update({
+                        photoUrl:response.data.s3_url,
                     },
                     {
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    }
-                );
-                await UserAnswer.update({
-                    photoUrl:response.data.s3_url,
-                },
-                {
-                    where:{uuid},
-                })
+                        where:{uuid},
+                    });
+                }catch(err){
+                    console.error(err);
+                }
             }
         }
     }

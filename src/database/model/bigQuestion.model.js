@@ -19,15 +19,10 @@ class BigQuestion extends Model {
                 modelName: 'BigQuestion',
                 tableName: 'big_questions',
                 timestamps: true,
-                underscored: false,
                 charset: 'utf8',
                 collate: 'utf8_general_ci',
             }
         );
-    }
-
-    static associate(db) {
-        this.hasMany(db.SmallQuestion, { foreignKey: 'bigQuestionId', sourceKey: 'id' });
     }
 }
 

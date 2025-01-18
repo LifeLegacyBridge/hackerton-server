@@ -1,11 +1,14 @@
+import axios from "axios";
 import UserAnswer from "../../../database/model/userAnswer.model.js";
+import User from "../../../database/model/user.model.js";
 
-export const savePost = async(data) => {
+export const savePost = async(data,uuid) => {
     // console.log(data);
     const createUserAnswer = await UserAnswer.create({
         bigQuestionId: data.bigQuestionId,
         smallQuestionId: data.smallQuestionId,
-        finalAnswer: data.finalAnswer
+        finalAnswer: data.finalAnswer,
+        uuid,
     });
 
     if (!createUserAnswer) {
@@ -15,11 +18,12 @@ export const savePost = async(data) => {
     return createUserAnswer;
 };
 
-export const confirmPost = async(bigQuestionId, smallQuestionId) => {
+export const confirmPost = async(bigQuestionId, smallQuestionId, uuid) => {
     const userAnswer = await UserAnswer.findOne({
         where: {
             bigQuestionId: bigQuestionId,
-            SmallQuestionId: smallQuestionId
+            SmallQuestionId: smallQuestionId,
+            uuid,
         }
     });
 
@@ -30,13 +34,14 @@ export const confirmPost = async(bigQuestionId, smallQuestionId) => {
     return userAnswer;
 }
 
-export const updatePost = async(bigQuestionId, smallQuestionId, finalAnswer) => {
+export const updatePost = async(bigQuestionId, smallQuestionId, finalAnswer, uuid) => {
     const updateUserAnswer = await UserAnswer.update(
         { finalAnswer: finalAnswer },
         {
             where: {
                 bigQuestionId: bigQuestionId,
-                SmallQuestionId: smallQuestionId
+                SmallQuestionId: smallQuestionId,
+                uuid,
             }
         }
     );
@@ -47,3 +52,36 @@ export const updatePost = async(bigQuestionId, smallQuestionId, finalAnswer) => 
 
     return finalAnswer;
 };
+
+export const final = async (uuid) => {
+    for(let i=1; i<=1; i++){
+        for(let j=1; j<=5; j++){
+            const userAnswer = await UserAnswer.findOne({
+                where: {
+                    bigQuestionId: i,
+                    smallQuestionId: j,
+                }
+            });
+            if(userAnswer.finalAnswer){
+                const response = await axios.post(
+                    'http://192.168.187.68:5000/generate',
+                    {
+                        prompt: userAnswer.finalAnswer,
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
+                await UserAnswer.update({
+                    photoUrl:response.data.s3_url,
+                },
+                {
+                    where:{uuid},
+                })
+            }
+        }
+    }
+    return;
+}

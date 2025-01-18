@@ -43,9 +43,6 @@ UserAnswerModel.init(sequelize);
 // 관계 설정
 UserModel.associate(db);
 UserCaseModel.associate(db);
-BigQuestionModel.associate(db);
-SmallQuestionModel.associate(db);
-UserAnswerModel.associate(db);
 
 // 내보내기
 export default db;

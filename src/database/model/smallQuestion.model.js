@@ -9,6 +9,10 @@ class SmallQuestion extends Model {
                     autoIncrement: true,
                     primaryKey: true,
                 },
+                smallQuestionId: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                },
                 bigQuestionId: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
@@ -23,15 +27,10 @@ class SmallQuestion extends Model {
                 modelName: 'SmallQuestion',
                 tableName: 'small_questions',
                 timestamps: true,
-                underscored: false,
                 charset: 'utf8',
                 collate: 'utf8_general_ci',
             }
         );
-    }
-
-    static associate(db) {
-        this.belongsTo(db.BigQuestion, { foreignKey: 'bigQuestionId', targetKey: 'id' });
     }
 }
 

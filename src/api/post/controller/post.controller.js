@@ -2,7 +2,7 @@ import * as postService from '../service/post.service.js';
 
 export const SaveUserPost = async(req, res) => {
     try {
-        const userPost = await postService.savePost(req.body);
+        const userPost = await postService.savePost(req.body,res.locals.uuid);
 
         if (!userPost) {
             return res.status(404).json({
@@ -22,7 +22,7 @@ export const SaveUserPost = async(req, res) => {
 export const ConfirmUserPost = async(req, res) => {
     try {
         const { bigQuestionId, smallQuestionId } = req.params;
-        const userPost = await postService.confirmPost(bigQuestionId, smallQuestionId);
+        const userPost = await postService.confirmPost(bigQuestionId, smallQuestionId,res.locals.uuid);
 
         if (!userPost) {
             return res.status(404).json({
@@ -43,7 +43,7 @@ export const ConfirmUserPost = async(req, res) => {
 export const UpdateUserPost = async(req, res) => {
     try {
         const { bigQuestionId, smallQuestionId, finalAnswer } = req.body;
-        const userPost = await postService.updatePost(bigQuestionId, smallQuestionId, finalAnswer);
+        const userPost = await postService.updatePost(bigQuestionId, smallQuestionId, finalAnswer,res.locals.uuid);
 
         if (!userPost) {
             return res.status(404).json({
@@ -56,6 +56,15 @@ export const UpdateUserPost = async(req, res) => {
             data: userPost
         });
     } catch (err) {
+        console.log(err);
+    }
+}
+
+export async function final(req,res) {
+    try{
+        await postService.final(res.locals.uuid);
+        return res.json({Success:"true"});
+    }catch(err){
         console.log(err);
     }
 }

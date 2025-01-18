@@ -9,6 +9,11 @@ class UserAnswer extends Model {
                     autoIncrement: true,
                     primaryKey: true,
                 },
+                uuid: {
+                    type: DataTypes.UUID,
+                    defaultValue: DataTypes.UUIDV4,
+                    allowNull: false,
+                },
                 bigQuestionId: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
@@ -19,7 +24,6 @@ class UserAnswer extends Model {
                 },
                 photoUrl: {
                     type: DataTypes.STRING,
-                    // allowNull: false,
                     allowNull: true,
                 },
                 finalAnswer: {
@@ -32,16 +36,10 @@ class UserAnswer extends Model {
                 modelName: 'UserAnswer',
                 tableName: 'user_answers',
                 timestamps: true,
-                underscored: false,
                 charset: 'utf8',
                 collate: 'utf8_general_ci',
             }
         );
-    }
-
-    static associate(db) {
-        this.belongsTo(db.BigQuestion, { foreignKey: 'bigQuestionId', targetKey: 'id' });
-        this.belongsTo(db.SmallQuestion, { foreignKey: 'smallQuestionId', targetKey: 'id' });
     }
 }
 

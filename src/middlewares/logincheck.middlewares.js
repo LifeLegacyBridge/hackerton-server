@@ -22,7 +22,7 @@ export const loginCheckMiddleWares = (req, res, next) => {
         const payload = jwt.verify(token, process.env.JWT_SECRET);
 
         // res.locals에 uuid 저장
-        res.locals.uuid = payload;
+        res.locals.uuid = payload.uuid;
 
         next(); // 다음 미들웨어 또는 라우터로 이동
     } catch (error) {

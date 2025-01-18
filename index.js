@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors'; // cors 패키지 임포트
 dotenv.config();
 
 import db from './src/database/index.js';
@@ -13,6 +14,7 @@ const app = express();
 const PORT = 3000;
 
 // Express 기본 설정
+app.use(cors()); // '*' 기본 허용
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

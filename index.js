@@ -6,6 +6,7 @@ import db from './src/database/index.js';
 import { authRouter } from './src/route/auth.route.js';
 import { userRouter } from './src/route/user.router.js';
 import { chatgptRouter } from './src/route/chatgpt.route.js';
+import { postRouter } from './src/route/post.router.js';
 
 const app = express();
 const PORT = 3000;
@@ -32,6 +33,7 @@ app.get('/', (req, res) => {
 app.use('/auth',authRouter);
 app.use('/user',userRouter);
 app.use('/chatgpt',chatgptRouter);
+app.use('/post', postRouter);
 
 app.listen(PORT, () => {
     console.log(`서버가 http://localhost:${PORT} 에서 실행 중입니다.`);

@@ -9,7 +9,7 @@ export async function signup (req,res) {
         return res.json({status: "SUCCESS", result});
     }catch(err){
         console.error(err);
-    }
+    } 
 }
 
 export async function signin (req,res) {

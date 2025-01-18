@@ -19,7 +19,8 @@ class UserAnswer extends Model {
                 },
                 photoUrl: {
                     type: DataTypes.STRING,
-                    allowNull: false,
+                    // allowNull: false,
+                    allowNull: true,
                 },
                 finalAnswer: {
                     type: DataTypes.STRING,

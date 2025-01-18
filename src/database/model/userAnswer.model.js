@@ -1,39 +1,47 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 
-export default (sequelize) => {
-    return sequelize.define('UserAnswer', {
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        bigQuestionId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'BigQuestions',
-                key: 'id',
+class UserAnswer extends Model {
+    static init(sequelize) {
+        return super.init(
+            {
+                id: {
+                    type: DataTypes.INTEGER,
+                    autoIncrement: true,
+                    primaryKey: true,
+                },
+                bigQuestionId: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                },
+                smallQuestionId: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                },
+                photoUrl: {
+                    type: DataTypes.STRING,
+                    allowNull: false,
+                },
+                finalAnswer: {
+                    type: DataTypes.STRING,
+                    allowNull: false,
+                },
             },
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-        },
-        smallQuestionId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'SmallQuestions',
-                key: 'id',
-            },
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-        },
-        photoUrl: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        finalAnswer: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-    });
-};
+            {
+                sequelize,
+                modelName: 'UserAnswer',
+                tableName: 'user_answers',
+                timestamps: true,
+                underscored: false,
+                charset: 'utf8',
+                collate: 'utf8_general_ci',
+            }
+        );
+    }
+
+    static associate(db) {
+        this.belongsTo(db.BigQuestion, { foreignKey: 'bigQuestionId', targetKey: 'id' });
+        this.belongsTo(db.SmallQuestion, { foreignKey: 'smallQuestionId', targetKey: 'id' });
+    }
+}
+
+export default UserAnswer;

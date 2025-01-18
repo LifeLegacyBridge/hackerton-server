@@ -1,6 +1,8 @@
 import express from 'express';
 import db from './src/database/index.js';
 import { authRouter } from './src/route/auth.route.js';
+import { chatgptRouter } from './src/route/chatgpt.route.js';
+
 
 const app = express();
 const PORT = 3000;
@@ -25,6 +27,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth',authRouter);
+app.use('/chatgpt',chatgptRouter);
 
 app.listen(PORT, () => {
     console.log(`서버가 http://localhost:${PORT} 에서 실행 중입니다.`);

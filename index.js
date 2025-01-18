@@ -1,4 +1,7 @@
 import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
+
 import db from './src/database/index.js';
 import { authRouter } from './src/route/auth.route.js';
 import { chatgptRouter } from './src/route/chatgpt.route.js';

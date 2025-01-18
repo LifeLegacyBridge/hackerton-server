@@ -1,17 +1,23 @@
-import { User } from '../../../database/index.js';
 import * as userService from '../service/user.service.js';
 
-export const GetUserCase = async(req, res, next) => {
+export const GetUserCase = async(req, res) => {
 
     try {
-        // const { uuid } = req.user;
-        const userCase = await userService.confirmCase(res.locals.uid);
+        // const userCase = await userService.confirmCase(res.locals.uuid);
+        const userCase = await userService.confirmCase('e80864d5-7c7e-426e-a68f-20a25dc9a11e');
 
-        return res.status(200).success({
-            message: "사용자 case 불러오기 성공"
+        if (!userCase) {
+            return res.status(404).json({
+                message: "사용자 case 불러오기 실패"
+            });
+        }
+
+        return res.status(200).json({
+            message: "사용자 case 불러오기 성공",
+            data: userCase
           });
     } catch (err) {
-        //
-        next(err);
+        console.error(err);
     }
 };
+

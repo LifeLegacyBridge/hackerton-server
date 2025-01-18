@@ -1,17 +1,12 @@
-import { 
-    sequelize, 
-    User,
-    UserCase, 
-    BigQuestion, 
-    SmallQuestion, 
-    UserAnswer } from '../../../database/index.js';
+import User from "../../../database/model/user.model.js";
 
-export const confirmCase =  async(caseId) => {
-    const user = await User.findOne({ where: { caseId: caseId } });
 
-    if (!user) {
-        //
+export const confirmCase =  async(uuid) => {
+    const user = await User.findOne({ where: { uuid: uuid } });
+
+    if (!user.caseId) {
+        throw new Error("해당 케이스를 불러올 수 없습니다.");
     }
 
-    return user;
+    return user.caseId;
 };

@@ -1,6 +1,5 @@
 import express from 'express';
-import { signin, signup, test } from '../api/auth/controller/auth.controller.js';
-import { loginCheckMiddleWares } from '../middlewares/logincheck.middlewares.js';
+import { signin, signup } from '../api/auth/controller/auth.controller.js';
 
 export const authRouter = express.Router();
 

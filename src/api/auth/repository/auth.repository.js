@@ -1,4 +1,4 @@
-import User from "../../../database/model/user.model";
+import User from "../../../database/model/user.model.js";
 
  export class AuthRepository {
     async findUserByEmail(email){

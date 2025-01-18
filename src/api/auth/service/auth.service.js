@@ -17,4 +17,13 @@ export class AuthService {
 
         return user;
     }
+
+    async login(email,password){
+        const existUser = await this.authRepository.findUserByEmail(email);
+        if (existUser) {
+            throw new Error('없는 사용자');
+        }
+        
+
+    }
 }

@@ -3,6 +3,7 @@ import db from './src/database/index.js';
 import { authRouter } from './src/route/auth.route.js';
 import { chatgptRouter } from './src/route/chatgpt.route.js';
 
+
 const app = express();
 const PORT = 3000;
 
